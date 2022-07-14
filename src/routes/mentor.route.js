@@ -1,7 +1,7 @@
 
 const express = require("express");
 const app = require("../server");
-const { getAll, getById, create, update, remove } = require("../usecases/mentor.usecase")
+const { getAll, getById, create, update, remove, changeGeneration } = require("../usecases/mentor.usecase")
 
 const router = express.Router()
 
@@ -88,6 +88,7 @@ router.delete("/:id", async (request, response) => {
   }
 })
 
+/*
 router.patch("/:id", async (request, response) => {
   try {
     const mentor = await update(request.params.id, request.body)
@@ -106,6 +107,29 @@ router.patch("/:id", async (request, response) => {
     })
   }
 })
+*/
+
+
+router.patch("/:id", async(request, response) => {
+    const { id } = request.params
+    const { body } = request
+    try {
+      const mentor = await changeGeneration(id, body)
+  
+      response.json({
+        success: true,
+        mentorActualizado: mentor
+      })
+    }catch(error) {
+      response.status(error.status || 500)
+      response.json({
+        success:false,
+        message: error.message
+      })
+    }
+  })
+  
+
 
 // 5 Endpoints
 module.exports = router

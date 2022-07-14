@@ -4,24 +4,23 @@ const mongoose = require("mongoose")
 const mentorSchema = new mongoose.Schema({
   name: {
     type: String,
+    required: true,
     minlength: 3,
-    maxlength: 20,
-    required: true
+    maxlength: 30
   },
-  edad: {
-    type: Number,
-    min: 18,
-    max: 150
+  age: {
+    type: Number
   },
-  sexo: {
-    type: String,
-    enum: ["f", "m", "o"]
-  },
-  modulos: {
-    type: [String]
-  },
-
- 
+  generations: {
+    type: [
+      {
+        // 19Js, un mentor solo puede estar en una generacion activa
+        name: String,
+        module: String,
+        isActive: Boolean
+      }
+    ]
+  }
 })
 
 // Koder -> modelo -> 1cosa

@@ -22,13 +22,17 @@
  * - > Mandar REPO
  */
 const express = require("express")
+const cors = require("cors")
 const routerKoders = require("./routes/koder.route")
 const routerMentors = require("./routes/mentor.route")
+const routerUsers = require("./routes/user.route")
+const routerAuth = require("./routes/auth.route")
 const middlewareImprimir = require("./middlewares/generico.middleware")
 
 const app = express();
 
 // Middleware
+app.use(cors)
 app.use(express.json())
 app.use(middlewareImprimir)
 
@@ -36,6 +40,8 @@ app.use(middlewareImprimir)
 app.use("/koders", routerKoders)
 
 app.use("/mentors", routerMentors)
+app.use("/users", routerUsers)
+app.use("/login", routerAuth)
 
 
 /**
